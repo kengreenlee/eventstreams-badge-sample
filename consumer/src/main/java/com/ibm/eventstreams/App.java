@@ -19,6 +19,8 @@
  */
 package com.ibm.eventstreams;
 
+import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,6 +30,8 @@ import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.config.SaslConfigs;
@@ -55,11 +59,21 @@ public class App {
                 @Override
                 public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
                     // TODO Move position to beginning of partition
+                    for (TopicPartition partition : partitions) {
+                        consumer.seekToBeginning(Arrays.asList(partition));
+                    }
                 }
             });
             // TODO: Add consumer poll loop
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10000L));
+            
             // TODO: Find the record whose key is equal to KEY ("coding-challenge")
-            // TODO: Print the record value to discover the secret message
+            for (ConsumerRecord<String, String> record : records) {
+                if (KEY.equals(record.key())) {
+                    // TODO: Print the record value to discover the secret message
+                    System.out.println(record.value());
+                }
+            }
         }
     }
 
@@ -75,6 +89,9 @@ public class App {
         configs.put(SaslConfigs.SASL_JAAS_CONFIG, "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"token\" password=\"" + apikey + "\";");
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        
+        configs.put(ConsumerConfig.CLIENT_ID_CONFIG, "eventstreams-badge-sample-consumer");
+        configs.put(ConsumerConfig.GROUP_ID_CONFIG, "eventstreams-badge-sample-group");
         return configs;
     }
 }

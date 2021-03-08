@@ -1,3 +1,23 @@
+https://developer.ibm.com/tutorials/event-streams-badge-event-streams-dev-challenge/
+
+```
+cd /home/ibmadmin/git/eventstreams-badge-sample
+
+java -jar coding-challenge-setup.jar \
+"kafka-2.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093,kafka-0.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093,kafka-1.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093" \
+lCQ1kHb2vj3pUHAgh0aVfvsvZ55wWUf0FRPRjB_0VRo7
+
+cd /home/ibmadmin/git/eventstreams-badge-sample/consumer
+
+java -jar ./build/libs/coding-challenge-consumer.jar \
+"kafka-2.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093,kafka-0.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093,kafka-1.mh-stwlnszcysqtspdhmqxn-4c201a12d7add7c99d2b22e361c6f175-0000.us-south.containers.appdomain.cloud:9093" \
+lCQ1kHb2vj3pUHAgh0aVfvsvZ55wWUf0FRPRjB_0VRo7
+
+ibmcloud es topic-delete event-streams-coding-challenge
+```
+
+---
+
 # Event Streams on Cloud Essentials coding challenge
 
 This coding challenge is part of the [Event Streams on Cloud Essentials course](https://developer.ibm.com/components/event-streams/series/badge-ibm-event-streams-developer-essentials/).

@@ -1,1 +1,6 @@
 consumer/bin/
+consumer/.gradle/
+consumer/.classpath
+consumer/.project
+consumer/.settings
+consumer/build/
